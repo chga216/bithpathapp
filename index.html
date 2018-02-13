@@ -1,37 +1,70 @@
-## Welcome to GitHub Pages
-
-You can use the [editor on GitHub](https://github.com/chga216/bithpathapp/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/chga216/bithpathapp/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Intro to MapView - Create a 2D map</title>
+<style>
+  html, body, #viewDiv {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+  }
+  h1 {
+    font-style: Georgia;
+    font-size: 150%;
+    text-align: center;
+  }
+  p {
+    font-style: Georgia;
+    font-size: 120%;
+    text-align: center
+  }
+  body {
+    background-color: powderblue;
+  }
+</style>
+  
+<link rel="stylesheet" href="https://js.arcgis.com/4.6/esri/css/main.css">
+<script src="https://js.arcgis.com/4.6/"></script>
+<script>
+require([
+  "esri/Map",
+  "esri/layers/MapImageLayer",
+  "esri/views/MapView",
+  "dojo/domReady!"
+], function(Map, MapImageLayer, MapView){
+  var map = new Map({
+    basemap: "streets"
+  });
+  
+ var utah_dem_layer = new MapImageLayer ({
+  url: "http://geoserver2.byu.edu/arcgis/rest/services/StorminMormons/DEM/MapServer"
+ });
+  
+  var utah_spdlimits_layer = new MapImageLayer ({
+   url: "http://geoserver2.byu.edu/arcgis/rest/services/StorminMormons/UtahApproximateSpeedLimits/MapServer"
+ });
+  
+map.layers.add(utah_dem_layer);
+map.layers.add(utah_spdlimits_layer);
+  
+  var view = new MapView({
+    container: "viewDiv",
+    map: map,  // Reference to the map object created before the scene
+    zoom: 6,  // Sets zoom level based on level of detail (LOD)
+    center: [-111.1, 39.1]  // Sets center point of view using longitude,latitude
+  });
+});
+</script>
+</head>
+  <hr>
+  <h1>Bike Route Planner</h1>
+  <p>By Chris Garcia</p>
+  <hr>
+  <br>
+<body>
+  <div id="viewDiv"></div>
+</body>
+</html>
